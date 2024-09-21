@@ -5,9 +5,14 @@ import { useCartStore } from "@/lib/store/use-cart-store";
 import { cn } from "@/lib/utils";
 import { Minus, Plus } from "lucide-react";
 
-export const Item = ({ item }) => {
+export const Item = ({ item, className }) => {
   return (
-    <div className={cn("relative rounded-md border p-3 shadow-inner h-fit")}>
+    <div
+      className={cn(
+        "relative rounded-md border p-3 shadow-inner h-fit",
+        className
+      )}
+    >
       <p className="absolute right-2 top-2 font-mono">
         {formatPrice(item.price)}
       </p>

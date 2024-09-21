@@ -1,9 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { formatPrice } from "@/lib/format-price";
 import { useCartPrice, useCartStore } from "@/lib/store/use-cart-store";
+import { cn } from "@/lib/utils";
 import { Minus, Trash } from "lucide-react";
 
-export const ItemsCart = () => {
+export const ItemsCart = ({ className }) => {
   const price = useCartPrice();
   const items = useCartStore((s) => s.items);
   return (
@@ -12,7 +13,9 @@ export const ItemsCart = () => {
         <h2 className="text-lg font-bold">Cart</h2>
         <p className="ml-auto font-mono">{formatPrice(price)}</p>
       </div>
-      <div className="flex max-h-32 flex-col gap-2 overflow-y-auto py-2">
+      <div
+        className={cn("flex flex-col gap-2 overflow-y-auto py-2", className)}
+      >
         {Object.values(items).map((cartItem) => (
           <CartLineItem
             quantity={cartItem.quantity}
