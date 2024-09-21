@@ -3,6 +3,7 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { db, storage } from "../firebase";
 
 export const setItem = async (id, item) => {
+  console.log({ item });
   // Si l'image est un fichier
   if (item.image instanceof File) {
     const path = `images/${item.image.name}`;

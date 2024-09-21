@@ -21,13 +21,15 @@ import {
 } from "@/components/ui/select";
 import { ImageInput } from "@/features/images/ImageInput";
 import { getId } from "@/lib/id";
+import { getItem } from "@/lib/items/get-item";
 import { setItem } from "@/lib/items/set-item";
 import { useUserStore } from "@/lib/store/use-user-store";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { User } from "lucide-react";
+import { Loader, User } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import useSWR, { mutate } from "swr";
 import { z } from "zod";
 
 const formSchema = z.object({
@@ -38,22 +40,18 @@ const formSchema = z.object({
   image: z.any(),
 });
 
-export default function ItemIdPage() {
-  const form = useForm({
-    resolver: zodResolver(formSchema),
-  });
+// itemId === new => Créer un nouvelle item
+// itemId = récupère cette item pour le modifier !
+export default function ItemIdPage({ params }) {
   const isAdmin = useUserStore((s) => s.isAdmin);
-  const router = useRouter();
 
-  function onSubmit(values) {
-    setItem(getId(values.name), {
-      name: values.name,
-      price: values.price * 100,
-      category: values.category,
-      image: values.image,
-    });
-    router.push("/");
-  }
+  const { data, isLoading } = useSWR(`/item/${params.itemId}`, async () => {
+    if (params.itemId === "new") return null;
+
+    return getItem(params.itemId);
+  });
+
+  console.log({ data, isLoading, params });
 
   if (!isAdmin) {
     return (
@@ -65,10 +63,47 @@ export default function ItemIdPage() {
     );
   }
 
+  if (isLoading) {
+    return <Loader className="animate-spin" />;
+  }
+
+  return (
+    <div>
+      <h1 className="text-2xl font-bold">Create item</h1>
+      <ItemForm defaultItem={data} />
+    </div>
+  );
+}
+
+const ItemForm = ({ defaultItem }) => {
+  const form = useForm({
+    resolver: zodResolver(formSchema),
+    defaultValues: defaultItem
+      ? {
+          ...defaultItem,
+          price: defaultItem.price / 100,
+        }
+      : null,
+  });
+
+  const router = useRouter();
+
+  function onSubmit(values) {
+    const id = defaultItem ? defaultItem.id : getId(values.name);
+    setItem(id, {
+      name: values.name,
+      price: values.price * 100,
+      category: values.category,
+      image: values.image,
+    });
+    mutate((key) => typeof key === "string" && key.startsWith("/item"));
+    mutate(`/item/${id}`);
+    router.push("/");
+  }
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="mt-4 space-y-4">
-        <h1 className="text-2xl font-bold">Create item</h1>
         <FormField
           control={form.control}
           name="name"
@@ -129,7 +164,7 @@ export default function ItemIdPage() {
             <FormItem>
               <FormLabel>Image</FormLabel>
               <FormControl>
-                <ImageInput value={field.value} onChange={field.onChange} />
+                <ImageInput image={field.value} onChange={field.onChange} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -145,4 +180,4 @@ export default function ItemIdPage() {
       </form>
     </Form>
   );
-}
+};
