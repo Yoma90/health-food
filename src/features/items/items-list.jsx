@@ -8,7 +8,7 @@ export const ItemsList = () => {
   });
 
   return (
-    <div className="grid grid-cols-2 gap-4">
+    <div className="grid max-h-full grid-cols-2 gap-4 overflow-x-auto pb-16">
       {data?.map((d) => (
         <Item item={d} key={d.id} />
       ))}

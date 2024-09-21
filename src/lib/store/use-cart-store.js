@@ -33,6 +33,9 @@ export const useCartStore = create(
               quantity: state.items[itemId].quantity - 1,
               item,
             };
+            if (state.items[itemId].quantity === 0) {
+              delete state.items[itemId];
+            }
           }
 
           return {
@@ -52,6 +55,15 @@ export const useCartQuantity = () => {
     return Object.values(s.items).reduce((acc, curr) => {
       if (!curr.quantity) return acc;
       return acc + curr.quantity;
+    }, 0);
+  });
+};
+
+export const useCartPrice = () => {
+  return useCartStore((s) => {
+    return Object.values(s.items).reduce((acc, curr) => {
+      if (!curr.quantity) return acc;
+      return acc + curr.quantity * curr.item.price;
     }, 0);
   });
 };
