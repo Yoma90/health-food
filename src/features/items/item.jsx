@@ -1,18 +1,34 @@
 /* eslint-disable @next/next/no-img-element */
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { formatPrice } from "@/lib/format-price";
+import { useAdminStore } from "@/lib/store/use-admin-store";
 import { useCartStore } from "@/lib/store/use-cart-store";
 import { cn } from "@/lib/utils";
-import { Minus, Plus } from "lucide-react";
+import { Edit, Minus, Plus, Trash } from "lucide-react";
+import Link from "next/link";
 
 export const Item = ({ item, className }) => {
+  const adminEnabled = useAdminStore((s) => s.adminEnabled);
   return (
     <div
       className={cn(
-        "relative rounded-md border p-3 shadow-inner h-fit",
+        "relative rounded-md border p-3 shadow-inner h-fit group",
         className
       )}
     >
+      {adminEnabled ? (
+        <div className="absolute left-2 top-2 flex items-center gap-2 opacity-0 transition group-hover:opacity-100">
+          <Link
+            className={buttonVariants({ size: "sm", variant: "outline" })}
+            href={`/items/${item.id}`}
+          >
+            <Edit size={12} />
+          </Link>
+          <Button size="sm" variant="outline">
+            <Trash size={12} />
+          </Button>
+        </div>
+      ) : null}
       <p className="absolute right-2 top-2 font-mono">
         {formatPrice(item.price)}
       </p>
@@ -21,7 +37,7 @@ export const Item = ({ item, className }) => {
         className="aspect-square w-full rounded-md object-contain"
       />
       <p>{item.name}</p>
-      <div className="flex items-end justify-end">
+      <div className="flex">
         <CartButton item={item} />
       </div>
     </div>
@@ -36,6 +52,7 @@ const CartButton = ({ item }) => {
   if (!quantity) {
     return (
       <Button
+        size="sm"
         onClick={() => {
           addItem(item);
         }}

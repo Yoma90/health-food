@@ -1,6 +1,7 @@
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
 import { Toaster } from "@/components/ui/sonner";
+import { AdminActions } from "@/features/admin/admin-actions";
 import { cn } from "@/lib/utils";
 import localFont from "next/font/local";
 import "./globals.css";
@@ -33,6 +34,7 @@ export default function RootLayout({ children }) {
         )}
       >
         <Toaster />
+        <AdminActions />
         <div className="m-auto flex h-screen max-w-md flex-col border-x">
           <Header />
           <main className="max-h-[calc(100%_-_100px)] flex-1 p-4">
