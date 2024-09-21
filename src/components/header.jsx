@@ -1,5 +1,6 @@
 "use client";
 
+import { useCartQuantity } from "@/lib/store/use-cart-store";
 import { useUserStore } from "@/lib/store/use-user-store";
 import { ShoppingBasket, User } from "lucide-react";
 import Image from "next/image";
@@ -8,7 +9,7 @@ import { Button } from "./ui/button";
 
 export const Header = () => {
   return (
-    <header className="flex items-center gap-2 px-4 py-2 border-b shadow-sm">
+    <header className="flex items-center gap-2 border-b px-4 py-2 shadow-sm">
       <Link href="/" className="inline-flex items-center gap-2">
         <Image
           src="/healthdonals.png"
@@ -20,15 +21,22 @@ export const Header = () => {
       </Link>
       <div className="ml-auto"></div>
       <UserNameHeader />
-      <Button
-        size="sm"
-        variant="outline"
-        className="inline-flex gap-2 items-center"
-      >
-        0
-        <ShoppingBasket size={12} />
-      </Button>
+      <ShoppingCartButton />
     </header>
+  );
+};
+
+const ShoppingCartButton = () => {
+  const quantity = useCartQuantity();
+  return (
+    <Button
+      size="sm"
+      variant="outline"
+      className="inline-flex items-center gap-2"
+    >
+      {quantity}
+      <ShoppingBasket size={12} />
+    </Button>
   );
 };
 
