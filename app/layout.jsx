@@ -33,9 +33,9 @@ export default function RootLayout({ children }) {
         )}
       >
         <Toaster />
-        <div className="min-h-full flex flex-col border-x max-w-md m-auto">
+        <div className="m-auto flex min-h-full max-w-md flex-col border-x">
           <Header />
-          <main className="flex-1 px-4 py-2">{children}</main>
+          <main className="flex-1 p-4">{children}</main>
           <Footer />
         </div>
       </body>

@@ -1,5 +1,6 @@
 "use client";
 
+import { ItemsList } from "@/features/items/items-list";
 import { useUserStore } from "@/lib/store/use-user-store";
 import LoginPage from "./login/page";
 
@@ -10,5 +11,9 @@ export default function Home() {
     return <LoginPage />;
   }
 
-  return <div>Hello Healthdonals</div>;
+  return (
+    <div>
+      <ItemsList />
+    </div>
+  );
 }
