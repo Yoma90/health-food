@@ -7,7 +7,7 @@ import { Minus, Plus } from "lucide-react";
 
 export const Item = ({ item }) => {
   return (
-    <div className={cn("relative rounded-md border p-3 shadow-inner")}>
+    <div className={cn("relative rounded-md border p-3 shadow-inner h-fit")}>
       <p className="absolute right-2 top-2 font-mono">
         {formatPrice(item.price)}
       </p>
