@@ -13,11 +13,11 @@ export const Header = () => {
       <Link href="/" className="inline-flex items-center gap-2">
         <Image
           src="/healthdonals.png"
-          alt="Healthdonals"
+          alt="Healthfood"
           width={32}
           height={32}
         />
-        <p className="text-sm font-bold">Healthdonals</p>
+        <p className="text-sm font-bold">HealthFood</p>
       </Link>
       <div className="ml-auto"></div>
       <UserNameHeader />

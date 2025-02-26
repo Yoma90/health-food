@@ -39,7 +39,7 @@ export default function LoginPage() {
           height={50}
         />
       </div>
-      <h1 className="text-2xl font-bold">Welcome to Healthdonals !</h1>
+      <h1 className="text-2xl font-bold">Welcome to Healthdonals !!</h1>
       <p>Login first to access our application.</p>
       <form
         action={(formData) => {

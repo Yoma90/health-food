@@ -7,15 +7,15 @@ export const Footer = () => {
       <Link href="/" className="inline-flex items-center gap-2">
         <Image
           src="/healthdonals.png"
-          alt="Healthdonals"
+          alt="Healthfood"
           width={32}
           height={32}
         />
-        <p className="text-sm font-bold">Healthdonals</p>
+        <p className="text-sm font-bold">HealthFood</p>
       </Link>
       <div className="ml-auto"></div>
       <p className="text-xs">
-        &copy; {new Date().getFullYear()} Healthdonals. All rights reserved.
+        &copy; {new Date().getFullYear()} HealthFood. All rights reserved.
       </p>
     </footer>
   );

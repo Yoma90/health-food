@@ -58,7 +58,7 @@ export default function ItemIdPage({ params }) {
       <Alert>
         <User size={12} />
         <AlertTitle>You are not authorized to view this page.</AlertTitle>
-        <AlertDescription>Only admin can.</AlertDescription>
+        <AlertDescription>Only admin can do it.</AlertDescription>
       </Alert>
     );
   }
